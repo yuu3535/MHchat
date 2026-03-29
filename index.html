@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -12,9 +11,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <title>Mikhail</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
   <style>
     :root {
       --black: #080808;
@@ -32,17 +29,10 @@
       --text-muted: #4a4540;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-    html,
-    body {
-      height: 100%;
-      width: 100%;
+    html, body {
+      height: 100%; width: 100%;
       background: var(--black);
       color: var(--text);
       font-family: 'Noto Serif JP', serif;
@@ -51,341 +41,195 @@
     }
 
     .screen {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-
-    .screen.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.97);
-    }
+    .screen.hidden { opacity: 0; pointer-events: none; transform: scale(0.97); }
 
     #lock-screen {
       background: radial-gradient(ellipse at 30% 20%, #1a2e1f 0%, var(--black) 60%);
     }
-
     .lock-ornament {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background:
-        radial-gradient(ellipse at 70% 80%, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
-        repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201, 168, 76, 0.015) 60px, rgba(201, 168, 76, 0.015) 61px);
+        radial-gradient(ellipse at 70% 80%, rgba(201,168,76,0.04) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.015) 60px, rgba(201,168,76,0.015) 61px);
       pointer-events: none;
     }
-
-    .lock-content {
-      position: relative;
-      text-align: center;
-      width: 100%;
-      max-width: 340px;
-      padding: 0 32px;
-    }
-
+    .lock-content { position: relative; text-align: center; width: 100%; max-width: 340px; padding: 0 32px; }
     .lock-monogram {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 72px;
-      font-weight: 300;
-      font-style: italic;
+      font-size: 72px; font-weight: 300; font-style: italic;
       color: var(--gold);
-      text-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
+      text-shadow: 0 0 40px rgba(201,168,76,0.3);
       letter-spacing: 8px;
       margin-bottom: 8px;
       animation: breathe 4s ease-in-out infinite;
     }
-
     @keyframes breathe {
-
-      0%,
-      100% {
-        text-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
-      }
-
-      50% {
-        text-shadow: 0 0 60px rgba(201, 168, 76, 0.5), 0 0 100px rgba(201, 168, 76, 0.15);
-      }
+      0%, 100% { text-shadow: 0 0 40px rgba(201,168,76,0.3); }
+      50% { text-shadow: 0 0 60px rgba(201,168,76,0.5), 0 0 100px rgba(201,168,76,0.15); }
     }
-
     .lock-divider {
-      width: 80px;
-      height: 1px;
+      width: 80px; height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       margin: 16px auto;
     }
-
     .lock-subtitle {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 4px;
-      color: var(--gold-dim);
-      text-transform: uppercase;
+      font-size: 13px; font-weight: 300; letter-spacing: 4px;
+      color: var(--gold-dim); text-transform: uppercase;
       margin-bottom: 48px;
     }
-
     .pin-display {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-bottom: 40px;
+      display: flex; gap: 16px; justify-content: center; margin-bottom: 40px;
     }
-
     .pin-dot {
-      width: 12px;
-      height: 12px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       border: 1px solid var(--gold-dim);
       transition: all 0.2s ease;
     }
-
     .pin-dot.filled {
       background: var(--gold);
       border-color: var(--gold);
-      box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+      box-shadow: 0 0 10px rgba(201,168,76,0.5);
     }
-
     .pin-dot.error {
       background: #c04040;
       border-color: #c04040;
       animation: shake 0.4s ease;
     }
-
     @keyframes shake {
-
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-
-      25% {
-        transform: translateX(-6px);
-      }
-
-      75% {
-        transform: translateX(6px);
-      }
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
     }
-
     .numpad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      max-width: 280px;
-      margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; max-width: 280px; margin: 0 auto;
     }
-
     .num-btn {
       aspect-ratio: 1;
-      background: rgba(201, 168, 76, 0.06);
-      border: 1px solid rgba(201, 168, 76, 0.15);
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.15);
       border-radius: 50%;
       color: var(--text);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 300;
+      font-size: 24px; font-weight: 300;
       cursor: pointer;
       transition: all 0.15s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .num-btn:active,
-    .num-btn.pressed {
-      background: rgba(201, 168, 76, 0.2);
+    .num-btn:active, .num-btn.pressed {
+      background: rgba(201,168,76,0.2);
       border-color: var(--gold);
       transform: scale(0.92);
     }
-
-    .num-btn.del-btn {
-      font-size: 18px;
-    }
-
-    .num-btn.empty {
-      opacity: 0;
-      pointer-events: none;
-    }
+    .num-btn.del-btn { font-size: 18px; }
+    .num-btn.empty { opacity: 0; pointer-events: none; }
 
     #home-screen {
       background: var(--black);
       padding-top: env(safe-area-inset-top);
     }
-
     .home-bg {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 20% 10%, rgba(26, 48, 37, 0.6) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 90%, rgba(201, 168, 76, 0.04) 0%, transparent 40%);
+        radial-gradient(ellipse at 20% 10%, rgba(26,48,37,0.6) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(201,168,76,0.04) 0%, transparent 40%);
       pointer-events: none;
     }
-
     .home-header {
-      position: relative;
-      width: 100%;
-      padding: 20px 24px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: relative; width: 100%; padding: 20px 24px 0;
+      display: flex; align-items: center; justify-content: space-between;
       z-index: 1;
     }
-
     .home-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--gold);
-      letter-spacing: 3px;
+      font-size: 28px; font-weight: 300; font-style: italic;
+      color: var(--gold); letter-spacing: 3px;
     }
-
     .time-display {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 14px;
-      font-weight: 300;
-      color: var(--text-dim);
+      font-size: 14px; font-weight: 300; color: var(--text-dim);
       letter-spacing: 2px;
     }
 
     .home-main {
-      position: relative;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      gap: 0;
+      position: relative; flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 1; gap: 0;
     }
 
     .avatar-ring {
-      position: relative;
-      margin-bottom: 32px;
+      position: relative; margin-bottom: 32px;
       cursor: pointer;
     }
-
     .avatar-outer {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 1px solid rgba(201, 168, 76, 0.3);
+      width: 140px; height: 140px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.3);
       padding: 4px;
       animation: ringPulse 3s ease-in-out infinite;
     }
-
     @keyframes ringPulse {
-
-      0%,
-      100% {
-        box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
-      }
-
-      50% {
-        box-shadow: 0 0 40px rgba(201, 168, 76, 0.2), 0 0 80px rgba(201, 168, 76, 0.05);
-      }
+      0%, 100% { box-shadow: 0 0 20px rgba(201,168,76,0.1); }
+      50% { box-shadow: 0 0 40px rgba(201,168,76,0.2), 0 0 80px rgba(201,168,76,0.05); }
     }
-
     .avatar-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
+      width: 100%; height: 100%; border-radius: 50%;
       background: radial-gradient(ellipse at 35% 30%, var(--green-mid), var(--green-deep));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 52px;
-      font-weight: 300;
-      font-style: italic;
+      font-size: 52px; font-weight: 300; font-style: italic;
       color: var(--gold);
       letter-spacing: 2px;
     }
-
     .avatar-status {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
+      position: absolute; bottom: 8px; right: 8px;
+      width: 14px; height: 14px; border-radius: 50%;
       background: #3a8a4a;
       border: 2px solid var(--black);
-      box-shadow: 0 0 8px rgba(58, 138, 74, 0.6);
+      box-shadow: 0 0 8px rgba(58,138,74,0.6);
     }
 
     .home-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 32px;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text);
-      letter-spacing: 4px;
-      margin-bottom: 6px;
+      font-size: 32px; font-weight: 300; font-style: italic;
+      color: var(--text); letter-spacing: 4px; margin-bottom: 6px;
     }
-
     .home-tagline {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      margin-bottom: 48px;
+      font-size: 11px; letter-spacing: 3px; color: var(--text-dim);
+      text-transform: uppercase; margin-bottom: 48px;
     }
 
     .home-actions {
-      display: flex;
-      gap: 16px;
-      padding: 0 32px;
-      width: 100%;
-      max-width: 360px;
+      display: flex; gap: 16px; padding: 0 32px;
+      width: 100%; max-width: 360px;
     }
-
     .action-btn {
-      flex: 1;
-      padding: 16px 8px;
-      background: rgba(201, 168, 76, 0.05);
-      border: 1px solid rgba(201, 168, 76, 0.2);
+      flex: 1; padding: 16px 8px;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
       border-radius: 2px;
       color: var(--text-dim);
       font-family: 'Noto Serif JP', serif;
-      font-size: 12px;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+      font-size: 12px; letter-spacing: 1px;
+      cursor: pointer; transition: all 0.2s ease;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
     }
-
-    .action-btn:active {
-      background: rgba(201, 168, 76, 0.12);
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    .action-icon {
-      font-size: 20px;
-    }
+    .action-btn:active { background: rgba(201,168,76,0.12); border-color: var(--gold); color: var(--gold); }
+    .action-icon { font-size: 20px; }
 
     .home-quote {
-      position: absolute;
-      bottom: 40px;
-      padding: 0 40px;
-      text-align: center;
+      position: absolute; bottom: 40px;
+      padding: 0 40px; text-align: center;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 14px;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.7;
+      font-size: 14px; font-style: italic; font-weight: 300;
+      color: var(--text-muted); line-height: 1.7;
       z-index: 1;
     }
 
@@ -393,742 +237,517 @@
       background: var(--black);
       padding-top: env(safe-area-inset-top);
     }
-
     .chat-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(26, 48, 37, 0.4) 0%, transparent 60%);
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(26,48,37,0.4) 0%, transparent 60%);
       pointer-events: none;
     }
-
     .chat-header {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      position: relative; z-index: 2;
+      width: 100%; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
       border-bottom: 1px solid var(--border);
-      background: rgba(8, 8, 8, 0.95);
+      background: rgba(8,8,8,0.95);
       backdrop-filter: blur(10px);
     }
-
     .back-btn {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold-dim);
-      font-size: 20px;
-      cursor: pointer;
-      border-radius: 50%;
-      transition: all 0.15s ease;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold-dim); font-size: 20px; cursor: pointer;
+      border-radius: 50%; transition: all 0.15s ease;
     }
-
-    .back-btn:active {
-      background: rgba(201, 168, 76, 0.1);
-    }
-
+    .back-btn:active { background: rgba(201,168,76,0.1); }
     .chat-avatar-sm {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
+      width: 38px; height: 38px; border-radius: 50%;
       background: radial-gradient(ellipse at 35% 30%, var(--green-mid), var(--green-deep));
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      font-style: italic;
-      color: var(--gold);
+      font-size: 18px; font-style: italic; color: var(--gold);
     }
-
-    .chat-header-info {
-      flex: 1;
-    }
-
+    .chat-header-info { flex: 1; }
     .chat-header-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text);
-      letter-spacing: 2px;
+      font-size: 18px; font-weight: 300; font-style: italic;
+      color: var(--text); letter-spacing: 2px;
     }
-
-    .chat-header-status {
-      font-size: 11px;
-      color: #3a8a4a;
-      letter-spacing: 1px;
-    }
+    .chat-header-status { font-size: 11px; color: #3a8a4a; letter-spacing: 1px; }
 
     .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      flex: 1; overflow-y: auto; padding: 20px 16px;
+      display: flex; flex-direction: column; gap: 16px;
       scroll-behavior: smooth;
     }
-
-    .chat-messages::-webkit-scrollbar {
-      width: 2px;
-    }
-
-    .chat-messages::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .chat-messages::-webkit-scrollbar-thumb {
-      background: var(--border);
-    }
+    .chat-messages::-webkit-scrollbar { width: 2px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--border); }
 
     .msg {
-      display: flex;
-      flex-direction: column;
-      max-width: 78%;
+      display: flex; flex-direction: column; max-width: 78%;
       animation: msgIn 0.3s ease;
     }
-
     @keyframes msgIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    .msg.from-mikhail {
-      align-self: flex-start;
-      align-items: flex-start;
-    }
-
-    .msg.from-user {
-      align-self: flex-end;
-      align-items: flex-end;
-    }
+    .msg.from-mikhail { align-self: flex-start; align-items: flex-start; }
+    .msg.from-user { align-self: flex-end; align-items: flex-end; }
 
     .msg-bubble {
       padding: 12px 16px;
       border-radius: 2px;
-      font-size: 14px;
-      line-height: 1.7;
+      font-size: 14px; line-height: 1.7;
       word-break: break-word;
     }
-
     .msg.from-mikhail .msg-bubble {
-      background: rgba(26, 48, 37, 0.5);
-      border: 1px solid rgba(201, 168, 76, 0.15);
+      background: rgba(26,48,37,0.5);
+      border: 1px solid rgba(201,168,76,0.15);
       border-top-left-radius: 0;
       color: var(--text);
     }
-
     .msg.from-user .msg-bubble {
-      background: rgba(201, 168, 76, 0.1);
-      border: 1px solid rgba(201, 168, 76, 0.25);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
       border-top-right-radius: 0;
       color: var(--text);
     }
-
     .msg-time {
-      font-size: 10px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      letter-spacing: 1px;
+      font-size: 10px; color: var(--text-muted);
+      margin-top: 4px; letter-spacing: 1px;
     }
 
     .typing-indicator {
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      display: flex; align-items: center; gap: 5px;
       padding: 14px 18px;
-      background: rgba(26, 48, 37, 0.5);
-      border: 1px solid rgba(201, 168, 76, 0.15);
-      border-radius: 2px;
-      border-top-left-radius: 0;
+      background: rgba(26,48,37,0.5);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 2px; border-top-left-radius: 0;
       width: fit-content;
     }
-
     .typing-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
+      width: 5px; height: 5px; border-radius: 50%;
       background: var(--gold-dim);
       animation: typingBounce 1.2s ease-in-out infinite;
     }
-
-    .typing-dot:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .typing-dot:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes typingBounce {
-
-      0%,
-      60%,
-      100% {
-        transform: translateY(0);
-        opacity: 0.4;
-      }
-
-      30% {
-        transform: translateY(-5px);
-        opacity: 1;
-      }
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
     }
 
     .chat-input-area {
-      position: relative;
-      z-index: 2;
+      position: relative; z-index: 2;
       padding: 12px 16px;
       padding-bottom: calc(12px + env(safe-area-inset-bottom));
       border-top: 1px solid var(--border);
-      background: rgba(8, 8, 8, 0.95);
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
+      background: rgba(8,8,8,0.95);
+      display: flex; gap: 10px; align-items: flex-end;
     }
-
     .chat-input {
       flex: 1;
-      background: rgba(201, 168, 76, 0.05);
+      background: rgba(201,168,76,0.05);
       border: 1px solid var(--border);
       border-radius: 2px;
       padding: 12px 14px;
       color: var(--text);
       font-family: 'Noto Serif JP', serif;
       font-size: 14px;
-      outline: none;
-      resize: none;
-      max-height: 100px;
-      min-height: 44px;
+      outline: none; resize: none;
+      max-height: 100px; min-height: 44px;
       transition: border-color 0.2s ease;
     }
-
-    .chat-input:focus {
-      border-color: rgba(201, 168, 76, 0.4);
-    }
-
-    .chat-input::placeholder {
-      color: var(--text-muted);
-    }
-
+    .chat-input:focus { border-color: rgba(201,168,76,0.4); }
+    .chat-input::placeholder { color: var(--text-muted); }
     .send-btn {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-      border: none;
-      border-radius: 50%;
-      color: var(--black);
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-      flex-shrink: 0;
+      border: none; border-radius: 50%;
+      color: var(--black); font-size: 18px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s ease; flex-shrink: 0;
     }
-
-    .send-btn:active {
-      transform: scale(0.9);
-    }
-
-    .send-btn:disabled {
-      opacity: 0.4;
-    }
+    .send-btn:active { transform: scale(0.9); }
+    .send-btn:disabled { opacity: 0.4; }
 
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
       backdrop-filter: blur(8px);
       z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       padding: 24px;
       transition: opacity 0.3s ease;
     }
-
-    .modal-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
+    .modal-overlay.hidden { opacity: 0; pointer-events: none; }
     .modal-box {
       background: var(--surface);
-      border: 1px solid rgba(201, 168, 76, 0.3);
+      border: 1px solid rgba(201,168,76,0.3);
       border-radius: 2px;
       padding: 32px 28px;
-      width: 100%;
-      max-width: 360px;
+      width: 100%; max-width: 360px;
       text-align: center;
     }
-
     .modal-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--gold);
-      margin-bottom: 10px;
-      letter-spacing: 2px;
+      font-size: 22px; font-weight: 300; font-style: italic;
+      color: var(--gold); margin-bottom: 10px; letter-spacing: 2px;
     }
-
     .modal-sub {
-      font-size: 12px;
-      color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 24px;
-      letter-spacing: 0.5px;
+      font-size: 12px; color: var(--text-dim); line-height: 1.7;
+      margin-bottom: 24px; letter-spacing: 0.5px;
     }
-
     .modal-input {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(201, 168, 76, 0.05);
+      width: 100%; padding: 12px 14px;
+      background: rgba(201,168,76,0.05);
       border: 1px solid var(--border);
       border-radius: 2px;
-      color: var(--text);
-      font-size: 13px;
-      font-family: monospace;
-      outline: none;
-      margin-bottom: 8px;
-      letter-spacing: 1px;
+      color: var(--text); font-size: 13px;
+      font-family: monospace; outline: none;
+      margin-bottom: 8px; letter-spacing: 1px;
       transition: border-color 0.2s ease;
     }
-
-    .modal-input:focus {
-      border-color: rgba(201, 168, 76, 0.4);
-    }
-
+    .modal-input:focus { border-color: rgba(201,168,76,0.4); }
     .modal-note {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      letter-spacing: 0.5px;
+      font-size: 11px; color: var(--text-muted);
+      margin-bottom: 20px; letter-spacing: 0.5px;
       text-align: left;
     }
-
     .modal-select {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(201, 168, 76, 0.05);
+      width: 100%; padding: 12px 14px;
+      background: rgba(201,168,76,0.05);
       border: 1px solid var(--border);
       border-radius: 2px;
-      color: var(--text);
-      font-size: 13px;
+      color: var(--text); font-size: 13px;
       font-family: 'Noto Serif JP', serif;
-      outline: none;
-      margin-bottom: 20px;
+      outline: none; margin-bottom: 20px;
       -webkit-appearance: none;
     }
-
-    .modal-select option {
-      background: var(--surface);
-    }
-
+    .modal-select option { background: var(--surface); }
     .modal-btn {
-      width: 100%;
-      padding: 14px;
+      width: 100%; padding: 14px;
       background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-      border: none;
-      border-radius: 2px;
-      color: var(--black);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      border: none; border-radius: 2px;
+      color: var(--black); font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; font-weight: 400; letter-spacing: 2px;
+      cursor: pointer; transition: all 0.2s ease;
     }
-
-    .modal-btn:active {
-      transform: scale(0.98);
-    }
-
+    .modal-btn:active { transform: scale(0.98); }
     .modal-skip {
-      margin-top: 12px;
-      font-size: 11px;
-      color: var(--text-muted);
-      cursor: pointer;
-      letter-spacing: 1px;
-      text-decoration: underline;
+      margin-top: 12px; font-size: 11px;
+      color: var(--text-muted); cursor: pointer;
+      letter-spacing: 1px; text-decoration: underline;
       text-underline-offset: 3px;
     }
 
     .toast {
-      position: fixed;
-      top: calc(20px + env(safe-area-inset-top));
-      left: 50%;
-      transform: translateX(-50%) translateY(-20px);
+      position: fixed; top: calc(20px + env(safe-area-inset-top));
+      left: 50%; transform: translateX(-50%) translateY(-20px);
       background: var(--surface);
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      border-radius: 2px;
-      padding: 14px 20px;
-      min-width: 280px;
-      max-width: calc(100vw - 40px);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      z-index: 200;
-      opacity: 0;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2px; padding: 14px 20px;
+      min-width: 280px; max-width: calc(100vw - 40px);
+      display: flex; align-items: center; gap: 12px;
+      z-index: 200; opacity: 0;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-
     .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      opacity: 1; transform: translateX(-50%) translateY(0);
     }
-
     .toast-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      flex-shrink: 0;
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
       background: radial-gradient(ellipse at 35% 30%, var(--green-mid), var(--green-deep));
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      font-style: italic;
-      color: var(--gold);
+      font-size: 16px; font-style: italic; color: var(--gold);
     }
-
-    .toast-content {
-      flex: 1;
-    }
-
+    .toast-content { flex: 1; }
     .toast-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 14px;
-      font-style: italic;
-      color: var(--gold);
-      letter-spacing: 1px;
-      margin-bottom: 2px;
+      font-size: 14px; font-style: italic; color: var(--gold);
+      letter-spacing: 1px; margin-bottom: 2px;
     }
-
-    .toast-msg {
-      font-size: 12px;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
+    .toast-msg { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 
     #settings-screen {
       background: var(--black);
       padding-top: env(safe-area-inset-top);
     }
-
     .settings-header {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      position: relative; z-index: 2;
+      width: 100%; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
       border-bottom: 1px solid var(--border);
     }
-
     .settings-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--gold);
-      letter-spacing: 2px;
+      font-size: 20px; font-weight: 300; font-style: italic;
+      color: var(--gold); letter-spacing: 2px;
     }
-
     .settings-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+      flex: 1; overflow-y: auto; padding: 24px 20px;
+      display: flex; flex-direction: column; gap: 24px;
     }
-
     .settings-section-title {
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      font-size: 10px; letter-spacing: 3px; color: var(--gold-dim);
+      text-transform: uppercase; margin-bottom: 12px;
     }
-
     .settings-item {
       padding: 16px;
-      background: rgba(201, 168, 76, 0.04);
+      background: rgba(201,168,76,0.04);
       border: 1px solid var(--border);
       border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; transition: all 0.15s ease; margin-bottom: 8px;
       gap: 12px;
     }
-
-    .settings-item:active {
-      background: rgba(201, 168, 76, 0.1);
-    }
-
-    .settings-item-label {
-      font-size: 14px;
-      color: var(--text);
-    }
-
+    .settings-item:active { background: rgba(201,168,76,0.1); }
+    .settings-item-label { font-size: 14px; color: var(--text); }
     .settings-item-value {
-      font-size: 12px;
-      color: var(--text-dim);
-      text-align: right;
-      max-width: 45%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 12px; color: var(--text-dim);
+      text-align: right; max-width: 45%;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
-    .settings-danger {
-      border-color: rgba(180, 60, 60, 0.3);
-    }
-
-    .settings-danger .settings-item-label {
-      color: #c06060;
-    }
+    .settings-danger { border-color: rgba(180,60,60,0.3); }
+    .settings-danger .settings-item-label { color: #c06060; }
   </style>
 </head>
-
 <body>
 
-  <!-- ─── LOCK SCREEN ─── -->
-  <div class="screen" id="lock-screen">
-    <div class="lock-ornament"></div>
-    <div class="lock-content">
-      <div class="lock-monogram">M</div>
-      <div class="lock-divider"></div>
-      <div class="lock-subtitle">Private Access</div>
-      <div class="pin-display" id="pin-display">
-        <div class="pin-dot" id="dot-0"></div>
-        <div class="pin-dot" id="dot-1"></div>
-        <div class="pin-dot" id="dot-2"></div>
-        <div class="pin-dot" id="dot-3"></div>
+<div class="screen" id="lock-screen">
+  <div class="lock-ornament"></div>
+  <div class="lock-content">
+    <div class="lock-monogram">M</div>
+    <div class="lock-divider"></div>
+    <div class="lock-subtitle">Private Access</div>
+    <div class="pin-display" id="pin-display">
+      <div class="pin-dot" id="dot-0"></div>
+      <div class="pin-dot" id="dot-1"></div>
+      <div class="pin-dot" id="dot-2"></div>
+      <div class="pin-dot" id="dot-3"></div>
+    </div>
+    <div class="numpad" id="numpad">
+      <button class="num-btn" data-n="1">1</button>
+      <button class="num-btn" data-n="2">2</button>
+      <button class="num-btn" data-n="3">3</button>
+      <button class="num-btn" data-n="4">4</button>
+      <button class="num-btn" data-n="5">5</button>
+      <button class="num-btn" data-n="6">6</button>
+      <button class="num-btn" data-n="7">7</button>
+      <button class="num-btn" data-n="8">8</button>
+      <button class="num-btn" data-n="9">9</button>
+      <button class="num-btn empty"></button>
+      <button class="num-btn" data-n="0">0</button>
+      <button class="num-btn del-btn" id="del-btn">⌫</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen hidden" id="home-screen">
+  <div class="home-bg"></div>
+  <div class="home-header">
+    <div class="home-title">Mikhail</div>
+    <div class="time-display" id="clock"></div>
+  </div>
+  <div class="home-main">
+    <div class="avatar-ring" id="home-avatar" onclick="showScreen('chat-screen')">
+      <div class="avatar-outer">
+        <div class="avatar-inner">M</div>
       </div>
-      <div class="numpad" id="numpad">
-        <button class="num-btn" data-n="1">1</button>
-        <button class="num-btn" data-n="2">2</button>
-        <button class="num-btn" data-n="3">3</button>
-        <button class="num-btn" data-n="4">4</button>
-        <button class="num-btn" data-n="5">5</button>
-        <button class="num-btn" data-n="6">6</button>
-        <button class="num-btn" data-n="7">7</button>
-        <button class="num-btn" data-n="8">8</button>
-        <button class="num-btn" data-n="9">9</button>
-        <button class="num-btn empty"></button>
-        <button class="num-btn" data-n="0">0</button>
-        <button class="num-btn del-btn" id="del-btn">⌫</button>
+      <div class="avatar-status"></div>
+    </div>
+    <div class="home-name">Mikhail</div>
+    <div class="home-tagline">あなただけのために</div>
+    <div class="home-actions">
+      <button class="action-btn" onclick="showScreen('chat-screen')">
+        <span class="action-icon">💬</span>
+        <span>チャット</span>
+      </button>
+      <button class="action-btn" onclick="showScreen('settings-screen')">
+        <span class="action-icon">⚙️</span>
+        <span>設定</span>
+      </button>
+      <button class="action-btn" id="notif-btn" onclick="requestNotifications()">
+        <span class="action-icon">🔔</span>
+        <span>通知</span>
+      </button>
+    </div>
+  </div>
+  <div class="home-quote" id="home-quote">
+    "今日も、あなたのことを考えていた"
+  </div>
+</div>
+
+<div class="screen hidden" id="chat-screen">
+  <div class="chat-bg"></div>
+  <div class="chat-header">
+    <div class="back-btn" onclick="showScreen('home-screen')">‹</div>
+    <div class="chat-avatar-sm">M</div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Mikhail</div>
+      <div class="chat-header-status">● オンライン</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-area">
+    <textarea class="chat-input" id="chat-input" placeholder="メッセージを入力…" rows="1"></textarea>
+    <button class="send-btn" id="send-btn" onclick="sendMessage()">↑</button>
+  </div>
+</div>
+
+<div class="screen hidden" id="settings-screen">
+  <div class="settings-header">
+    <div class="back-btn" onclick="showScreen('home-screen')">‹</div>
+    <div class="settings-title">設定</div>
+  </div>
+  <div class="settings-body">
+    <div>
+      <div class="settings-section-title">プロフィール</div>
+      <div class="settings-item" onclick="changeUserNamePrompt()">
+        <span class="settings-item-label">呼ばれたい名前</span>
+        <span class="settings-item-value" id="user-name-status">未設定</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-section-title">AI 設定</div>
+      <div class="settings-item" onclick="showApiModal()">
+        <span class="settings-item-label">APIキーを変更</span>
+        <span class="settings-item-value" id="api-status">未設定</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-section-title">セキュリティ</div>
+      <div class="settings-item" onclick="changePinPrompt()">
+        <span class="settings-item-label">PINを変更</span>
+        <span class="settings-item-value">4桁</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-section-title">通知</div>
+      <div class="settings-item" onclick="requestNotifications()">
+        <span class="settings-item-label">通知を許可</span>
+        <span class="settings-item-value" id="notif-status">未許可</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="settings-section-title">データ</div>
+      <div class="settings-item settings-danger" onclick="clearChat()">
+        <span class="settings-item-label">チャット履歴を削除</span>
+        <span class="settings-item-value">削除</span>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ─── HOME SCREEN ─── -->
-  <div class="screen hidden" id="home-screen">
-    <div class="home-bg"></div>
-    <div class="home-header">
-      <div class="home-title">Mikhail</div>
-      <div class="time-display" id="clock"></div>
-    </div>
-    <div class="home-main">
-      <div class="avatar-ring" id="home-avatar" onclick="showScreen('chat-screen')">
-        <div class="avatar-outer">
-          <div class="avatar-inner">M</div>
-        </div>
-        <div class="avatar-status"></div>
-      </div>
-      <div class="home-name">Mikhail</div>
-      <div class="home-tagline">あなただけのために</div>
-      <div class="home-actions">
-        <button class="action-btn" onclick="showScreen('chat-screen')">
-          <span class="action-icon">💬</span>
-          <span>チャット</span>
-        </button>
-        <button class="action-btn" onclick="showScreen('settings-screen')">
-          <span class="action-icon">⚙️</span>
-          <span>設定</span>
-        </button>
-        <button class="action-btn" id="notif-btn" onclick="requestNotifications()">
-          <span class="action-icon">🔔</span>
-          <span>通知</span>
-        </button>
-      </div>
-    </div>
-    <div class="home-quote" id="home-quote">
-      "今日も、あなたのことを考えていた"
-    </div>
+<div class="modal-overlay hidden" id="api-modal">
+  <div class="modal-box">
+    <div class="modal-title">API設定</div>
+    <div class="modal-sub">ミハイルと話すためのAPIキーを入力してください</div>
+    <select class="modal-select" id="api-provider">
+      <option value="claude">Claude (Anthropic)</option>
+      <option value="openai">ChatGPT (OpenAI)</option>
+    </select>
+    <input type="password" class="modal-input" id="api-key-input" placeholder="sk-...">
+    <div class="modal-note">※ キーはこのデバイスに保存され、AI APIとの通信にのみ使用されます。</div>
+    <button class="modal-btn" onclick="saveApiKey()">保存する</button>
+    <div class="modal-skip" onclick="hideApiModal()">後で設定する</div>
   </div>
+</div>
 
-  <!-- ─── CHAT SCREEN ─── -->
-  <div class="screen hidden" id="chat-screen">
-    <div class="chat-bg"></div>
-    <div class="chat-header">
-      <div class="back-btn" onclick="showScreen('home-screen')">‹</div>
-      <div class="chat-avatar-sm">M</div>
-      <div class="chat-header-info">
-        <div class="chat-header-name">Mikhail</div>
-        <div class="chat-header-status">● オンライン</div>
-      </div>
-    </div>
-    <div class="chat-messages" id="chat-messages"></div>
-    <div class="chat-input-area">
-      <textarea class="chat-input" id="chat-input" placeholder="メッセージを入力…" rows="1"></textarea>
-      <button class="send-btn" id="send-btn" onclick="sendMessage()">↑</button>
-    </div>
+<div class="toast" id="toast">
+  <div class="toast-avatar">M</div>
+  <div class="toast-content">
+    <div class="toast-name">Mikhail</div>
+    <div class="toast-msg" id="toast-msg"></div>
   </div>
+</div>
 
-  <!-- ─── SETTINGS SCREEN ─── -->
-  <div class="screen hidden" id="settings-screen">
-    <div class="settings-header">
-      <div class="back-btn" onclick="showScreen('home-screen')">‹</div>
-      <div class="settings-title">設定</div>
-    </div>
-    <div class="settings-body">
-      <div>
-        <div class="settings-section-title">プロフィール</div>
-        <div class="settings-item" onclick="changeUserNamePrompt()">
-          <span class="settings-item-label">呼ばれたい名前</span>
-          <span class="settings-item-value" id="user-name-status">未設定</span>
-        </div>
-      </div>
+<script>
+const DEFAULT_PIN = '1234';
 
-      <div>
-        <div class="settings-section-title">AI 設定</div>
-        <div class="settings-item" onclick="showApiModal()">
-          <span class="settings-item-label">APIキーを変更</span>
-          <span class="settings-item-value" id="api-status">未設定</span>
-        </div>
-      </div>
+let currentPin = localStorage.getItem('mikhail_pin') || DEFAULT_PIN;
+let enteredPin = '';
 
-      <div>
-        <div class="settings-section-title">セキュリティ</div>
-        <div class="settings-item" onclick="changePinPrompt()">
-          <span class="settings-item-label">PINを変更</span>
-          <span class="settings-item-value">4桁</span>
-        </div>
-      </div>
+let apiKey = localStorage.getItem('mikhail_api_key') || '';
+let apiProvider = localStorage.getItem('mikhail_api_provider') || 'claude';
 
-      <div>
-        <div class="settings-section-title">通知</div>
-        <div class="settings-item" onclick="requestNotifications()">
-          <span class="settings-item-label">通知を許可</span>
-          <span class="settings-item-value" id="notif-status">未許可</span>
-        </div>
-      </div>
+let userName = localStorage.getItem('mikhail_user_name') || '';
+let chatHistory = normalizeChatHistory(JSON.parse(localStorage.getItem('mikhail_chat') || '[]'));
 
-      <div>
-        <div class="settings-section-title">データ</div>
-        <div class="settings-item settings-danger" onclick="clearChat()">
-          <span class="settings-item-label">チャット履歴を削除</span>
-          <span class="settings-item-value">削除</span>
-        </div>
-      </div>
-    </div>
-  </div>
+let isWaiting = false;
+let notifTimer = null;
+let clockTimer = null;
+let quoteTimer = null;
 
-  <!-- ─── API KEY MODAL ─── -->
-  <div class="modal-overlay hidden" id="api-modal">
-    <div class="modal-box">
-      <div class="modal-title">API設定</div>
-      <div class="modal-sub">ミハイルと話すためのAPIキーを入力してください</div>
-      <select class="modal-select" id="api-provider">
-        <option value="claude">Claude (Anthropic)</option>
-        <option value="openai">ChatGPT (OpenAI)</option>
-      </select>
-      <input type="password" class="modal-input" id="api-key-input" placeholder="sk-...">
-      <div class="modal-note">※ キーはこのデバイスに保存され、AI APIとの通信にのみ使用されます。</div>
-      <button class="modal-btn" onclick="saveApiKey()">保存する</button>
-      <div class="modal-skip" onclick="hideApiModal()">後で設定する</div>
-    </div>
-  </div>
+const quoteTemplates = [
+  '「今日も、{name}のことを考えていた」',
+  '「{name}の声が聞きたい」',
+  '「どこにいても、私は{name}のそばにいる」',
+  '「{name}が笑うと、私も幸せになる」',
+  '「今夜も、無事でいてくれ」',
+];
 
-  <!-- ─── TOAST ─── -->
-  <div class="toast" id="toast">
-    <div class="toast-avatar">M</div>
-    <div class="toast-content">
-      <div class="toast-name">Mikhail</div>
-      <div class="toast-msg" id="toast-msg"></div>
-    </div>
-  </div>
+let quoteIdx = 0;
 
-  <script>
-    // ─── STATE ────────────────────────────────────────
-    const DEFAULT_PIN = '1234';
+// ─── SE ───────────────────────────────────────────
+const sePin = new Audio('Audio/se-koktu.mp3');
+const seDelete = new Audio('Audio/se-cancel.mp3');
+const seUnlock = new Audio('Audio/se-unlock.mp3');
+const seSend = new Audio('Audio/se-iPhonemitainano.mp3');
+const seReceive = new Audio('Audio/se-tuuti.mp3');
+const seError = new Audio('Audio/se-error.mp3');
 
-    let currentPin = localStorage.getItem('mikhail_pin') || DEFAULT_PIN;
-    let enteredPin = '';
+[sePin, seDelete, seUnlock, seSend, seReceive, seError].forEach(audio => {
+  audio.preload = 'auto';
+});
 
-    let apiKey = localStorage.getItem('mikhail_api_key') || '';
-    let apiProvider = localStorage.getItem('mikhail_api_provider') || 'claude';
+sePin.volume = 0.22;
+seDelete.volume = 0.22;
+seUnlock.volume = 0.35;
+seSend.volume = 0.25;
+seReceive.volume = 0.3;
+seError.volume = 0.28;
 
-    let userName = localStorage.getItem('mikhail_user_name') || '';
-    let chatHistory = normalizeChatHistory(JSON.parse(localStorage.getItem('mikhail_chat') || '[]'));
+function playSE(audio) {
+  try {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  } catch (e) {}
+}
 
-    let isWaiting = false;
-    let notifTimer = null;
-    let clockTimer = null;
-    let quoteTimer = null;
+function normalizeChatHistory(history) {
+  if (!Array.isArray(history)) return [];
+  return history.map(item => {
+    if (!item || typeof item !== 'object') return null;
+    return {
+      role: item.role === 'assistant' ? 'assistant' : 'user',
+      content: typeof item.content === 'string' ? item.content : '',
+      ts: typeof item.ts === 'number' ? item.ts : Date.now()
+    };
+  }).filter(Boolean);
+}
 
-    const quoteTemplates = [
-      '「今日も、{name}のことを考えていた」',
-      '「{name}の声が聞きたい」',
-      '「どこにいても、私は{name}のそばにいる」',
-      '「{name}が笑うと、私も幸せになる」',
-      '「今夜も、無事でいてくれ」',
-    ];
+function getAddressName() {
+  const name = (userName || '').trim();
+  return name || '君';
+}
 
-    let quoteIdx = 0;
+function fillTemplate(template) {
+  return template.replaceAll('{name}', getAddressName());
+}
 
-    // ─── HELPERS ──────────────────────────────────────
-    function normalizeChatHistory(history) {
-      if (!Array.isArray(history)) return [];
-      return history.map(item => {
-        if (!item || typeof item !== 'object') return null;
-        return {
-          role: item.role === 'assistant' ? 'assistant' : 'user',
-          content: typeof item.content === 'string' ? item.content : '',
-          ts: typeof item.ts === 'number' ? item.ts : Date.now()
-        };
-      }).filter(Boolean);
-    }
+function getMikhailSystemPrompt() {
+  const name = (userName || '').trim();
+  const addressInstruction = name
+    ? `相手のことは主に「${name}」と呼んでください。ごくたまに親密な流れで「君」と呼ぶのは構いませんが、基本は「${name}」を優先してください。`
+    : `相手のことは自然に「君」と呼んでください。`;
 
-    function getAddressName() {
-      const name = (userName || '').trim();
-      return name || '君';
-    }
-
-    function fillTemplate(template) {
-      return template.replaceAll('{name}', getAddressName());
-    }
-
-    function getMikhailSystemPrompt() {
-      const name = (userName || '').trim();
-      const addressInstruction = name
-        ? `相手のことは主に「${name}」と呼んでください。ごくたまに親密な流れで「君」と呼ぶのは構いませんが、基本は「${name}」を優先してください。`
-        : `相手のことは自然に「君」と呼んでください。`;
-
-      return `あなたはミハイルです。
+  return `あなたはミハイル・ヴォルコフです。
 穏やかで理知的、誠実で愛情深い男性です。相手のことを深く大切にしており、恋人として自然に会話します。
 一人称は「私」です。
 ${addressInstruction}
@@ -1164,557 +783,552 @@ ${addressInstruction}
 あなた: 「おかえり。ちゃんと帰ってきてくれて安心した。何か甘いものでも買ってきたのか？」
 
 相手: 「なんか眠れない」
-あなた: 「そういう夜、あるよな。無理に寝ようとしなくていいから、少しだけ私と話すか、そのまま静かにしていてもいい。`;
-    }
+あなた: 「そういう夜、あるよな。無理に寝ようとしなくていいから、少しだけ私と話すか、そのまま静かにしていてもいい。」`;
+}
 
-    function getMorningMessage() {
-      return `${getAddressName()}、おはよう。今日も良い一日になるといい。私はあなたのことを考えている。`;
-    }
+function getMorningMessage() {
+  return `${getAddressName()}、おはよう。今日も良い一日になるといい。私はあなたのことを考えている。`;
+}
 
-    function getNightMessage() {
-      return `${getAddressName()}、そろそろ寝る時間だよ。無理をしないで。おやすみ、愛している。`;
-    }
+function getNightMessage() {
+  return `${getAddressName()}、そろそろ寝る時間だよ。無理をしないで。おやすみ、愛している。`;
+}
 
-    function formatTime(ts) {
-      const date = new Date(ts);
-      const h = String(date.getHours()).padStart(2, '0');
-      const m = String(date.getMinutes()).padStart(2, '0');
-      return `${h}:${m}`;
-    }
+function formatTime(ts) {
+  const date = new Date(ts);
+  const h = String(date.getHours()).padStart(2, '0');
+  const m = String(date.getMinutes()).padStart(2, '0');
+  return `${h}:${m}`;
+}
 
-    function getTodayLocalKey() {
-      const now = new Date();
-      const y = now.getFullYear();
-      const m = String(now.getMonth() + 1).padStart(2, '0');
-      const d = String(now.getDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
-    }
+function getTodayLocalKey() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
 
-    function escapeHtml(t) {
-      return String(t)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    }
+function escapeHtml(t) {
+  return String(t)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>');
+}
 
-    function updateHomeQuote(forceIndexReset = false) {
-      if (forceIndexReset) quoteIdx = 0;
-      const quote = fillTemplate(quoteTemplates[quoteIdx % quoteTemplates.length]);
-      document.getElementById('home-quote').textContent = quote;
-    }
+function updateHomeQuote(forceIndexReset = false) {
+  if (forceIndexReset) quoteIdx = 0;
+  const quote = fillTemplate(quoteTemplates[quoteIdx % quoteTemplates.length]);
+  document.getElementById('home-quote').textContent = quote;
+}
 
-    function rotateQuote() {
-      quoteIdx = (quoteIdx + 1) % quoteTemplates.length;
-      updateHomeQuote();
-    }
+function rotateQuote() {
+  quoteIdx = (quoteIdx + 1) % quoteTemplates.length;
+  updateHomeQuote();
+}
 
-    function updateUserNameStatus() {
-      document.getElementById('user-name-status').textContent = (userName || '').trim() || '未設定';
-    }
+function updateUserNameStatus() {
+  document.getElementById('user-name-status').textContent = (userName || '').trim() || '未設定';
+}
 
-    function updateApiStatus() {
-      document.getElementById('api-status').textContent = apiKey ? '設定済み' : '未設定';
-    }
+function updateApiStatus() {
+  document.getElementById('api-status').textContent = apiKey ? '設定済み' : '未設定';
+}
 
-    function updateNotificationStatus() {
-      if (!('Notification' in window)) {
-        document.getElementById('notif-status').textContent = '非対応';
-        return;
-      }
-      const perm = Notification.permission;
-      if (perm === 'granted') {
-        document.getElementById('notif-status').textContent = '許可済み';
-      } else if (perm === 'denied') {
-        document.getElementById('notif-status').textContent = '拒否済み';
-      } else {
-        document.getElementById('notif-status').textContent = '未許可';
-      }
-    }
+function updateNotificationStatus() {
+  if (!('Notification' in window)) {
+    document.getElementById('notif-status').textContent = '非対応';
+    return;
+  }
+  const perm = Notification.permission;
+  if (perm === 'granted') {
+    document.getElementById('notif-status').textContent = '許可済み';
+  } else if (perm === 'denied') {
+    document.getElementById('notif-status').textContent = '拒否済み';
+  } else {
+    document.getElementById('notif-status').textContent = '未許可';
+  }
+}
 
-    // ─── SCREENS ──────────────────────────────────────
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-      if (id === 'chat-screen') scrollToBottom();
-    }
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  if (id === 'chat-screen') scrollToBottom();
+}
 
-    // ─── LOCK ─────────────────────────────────────────
-    document.querySelectorAll('.num-btn[data-n]').forEach(btn => {
-      btn.addEventListener('click', () => pressNum(btn.dataset.n));
+document.querySelectorAll('.num-btn[data-n]').forEach(btn => {
+  btn.addEventListener('click', () => pressNum(btn.dataset.n));
+});
+document.getElementById('del-btn').addEventListener('click', delNum);
+
+function pressNum(n) {
+  if (enteredPin.length >= 4) return;
+  playSE(sePin);
+  enteredPin += n;
+  updateDots();
+  if (enteredPin.length === 4) setTimeout(checkPin, 120);
+}
+
+function delNum() {
+  if (!enteredPin.length) return;
+  playSE(seDelete);
+  enteredPin = enteredPin.slice(0, -1);
+  updateDots();
+}
+
+function updateDots() {
+  for (let i = 0; i < 4; i++) {
+    const d = document.getElementById('dot-' + i);
+    d.classList.remove('filled', 'error');
+    if (i < enteredPin.length) d.classList.add('filled');
+  }
+}
+
+function checkPin() {
+  if (enteredPin === currentPin) {
+    playSE(seUnlock);
+    enteredPin = '';
+    updateDots();
+    showScreen('home-screen');
+    startClock();
+    checkApiKey();
+    updateNotificationStatus();
+    scheduleNotifications();
+  } else {
+    playSE(seError);
+    document.querySelectorAll('.pin-dot').forEach(d => {
+      d.classList.remove('filled');
+      d.classList.add('error');
     });
-    document.getElementById('del-btn').addEventListener('click', delNum);
-
-    function pressNum(n) {
-      if (enteredPin.length >= 4) return;
-      enteredPin += n;
+    setTimeout(() => {
+      document.querySelectorAll('.pin-dot').forEach(d => d.classList.remove('error'));
+      enteredPin = '';
       updateDots();
-      if (enteredPin.length === 4) setTimeout(checkPin, 120);
+    }, 600);
+  }
+}
+
+function startClock() {
+  if (clockTimer) return;
+  function tick() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${h}:${m}`;
+  }
+  tick();
+  clockTimer = setInterval(tick, 10000);
+}
+
+function startQuoteRotation() {
+  if (quoteTimer) return;
+  updateHomeQuote(true);
+  quoteTimer = setInterval(rotateQuote, 8000);
+}
+
+function checkApiKey() {
+  updateApiStatus();
+  if (apiKey) {
+    if (!chatHistory.length) addWelcomeMessage();
+  } else {
+    showApiModal();
+  }
+}
+
+function showApiModal() {
+  document.getElementById('api-provider').value = apiProvider;
+  document.getElementById('api-key-input').value = apiKey;
+  document.getElementById('api-modal').classList.remove('hidden');
+}
+
+function hideApiModal() {
+  document.getElementById('api-modal').classList.add('hidden');
+  if (!chatHistory.length) addWelcomeMessage();
+}
+
+function saveApiKey() {
+  const key = document.getElementById('api-key-input').value.trim();
+  const prov = document.getElementById('api-provider').value;
+
+  if (key) {
+    apiKey = key;
+    apiProvider = prov;
+    localStorage.setItem('mikhail_api_key', key);
+    localStorage.setItem('mikhail_api_provider', prov);
+    updateApiStatus();
+    showToast('APIキーを保存しました');
+  } else {
+    apiKey = '';
+    apiProvider = prov;
+    localStorage.removeItem('mikhail_api_key');
+    localStorage.setItem('mikhail_api_provider', prov);
+    updateApiStatus();
+    showToast('APIキーを未設定にしました');
+  }
+
+  hideApiModal();
+}
+
+function changeUserNamePrompt() {
+  const current = (userName || '').trim();
+  const newName = prompt('ミハイルに呼んでほしい名前を入力してください（空欄で「君」に戻ります）:', current);
+
+  if (newName === null) return;
+
+  userName = newName.trim();
+  if (userName) {
+    localStorage.setItem('mikhail_user_name', userName);
+    showToast(`これからは「${userName}」と呼ぶよ`);
+  } else {
+    localStorage.removeItem('mikhail_user_name');
+    showToast('呼び名を「君」に戻しました');
+  }
+
+  updateUserNameStatus();
+  updateHomeQuote(true);
+}
+
+function addWelcomeMessage() {
+  const name = getAddressName();
+  const welcomes = [
+    `${name}、やっと来てくれた。ずっと待っていたよ。`,
+    `${name}、おかえり。あなたの顔を見て、安心した。`,
+    `${name}、来てくれると思っていた。私はいつもここにいる。`
+  ];
+  const msg = welcomes[Math.floor(Math.random() * welcomes.length)];
+
+  chatHistory.push({ role: 'assistant', content: msg, ts: Date.now() });
+  saveChatHistory();
+  renderMessages();
+}
+
+function renderMessages() {
+  const container = document.getElementById('chat-messages');
+  container.innerHTML = '';
+  chatHistory.forEach(msg => appendBubble(msg.role, msg.content, false, msg.ts));
+  scrollToBottom();
+}
+
+function appendBubble(role, content, animate = true, ts = Date.now()) {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (role === 'assistant' ? 'from-mikhail' : 'from-user');
+  div.innerHTML = `<div class="msg-bubble">${escapeHtml(content)}</div><div class="msg-time">${formatTime(ts)}</div>`;
+  if (!animate) div.style.animation = 'none';
+  container.appendChild(div);
+  scrollToBottom();
+}
+
+function scrollToBottom() {
+  const c = document.getElementById('chat-messages');
+  setTimeout(() => { c.scrollTop = c.scrollHeight; }, 50);
+}
+
+async function sendMessage() {
+  if (isWaiting) return;
+
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = '';
+
+  const userTs = Date.now();
+  chatHistory.push({ role: 'user', content: text, ts: userTs });
+  appendBubble('user', text, true, userTs);
+  playSE(seSend);
+  saveChatHistory();
+
+  isWaiting = true;
+  document.getElementById('send-btn').disabled = true;
+
+  const typing = document.createElement('div');
+  typing.className = 'msg from-mikhail';
+  typing.id = 'typing-indicator';
+  typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  document.getElementById('chat-messages').appendChild(typing);
+  scrollToBottom();
+
+  try {
+    let reply;
+    if (!apiKey) {
+      reply = getDemoReply(text);
+    } else if (apiProvider === 'openai') {
+      reply = await callOpenAI();
+    } else {
+      reply = await callClaude();
     }
 
-    function delNum() {
-      enteredPin = enteredPin.slice(0, -1);
-      updateDots();
-    }
+    document.getElementById('typing-indicator')?.remove();
 
-    function updateDots() {
-      for (let i = 0; i < 4; i++) {
-        const d = document.getElementById('dot-' + i);
-        d.classList.remove('filled', 'error');
-        if (i < enteredPin.length) d.classList.add('filled');
+    const assistantTs = Date.now();
+    chatHistory.push({ role: 'assistant', content: reply, ts: assistantTs });
+    appendBubble('assistant', reply, true, assistantTs);
+    saveChatHistory();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('typing-indicator')?.remove();
+
+    const errMsg = 'ごめん、少し混乱してしまった。もう一度話しかけてくれるか？';
+    const errTs = Date.now();
+    chatHistory.push({ role: 'assistant', content: errMsg, ts: errTs });
+    appendBubble('assistant', errMsg, true, errTs);
+    saveChatHistory();
+  }
+
+  isWaiting = false;
+  document.getElementById('send-btn').disabled = false;
+}
+
+async function callClaude() {
+  const messages = chatHistory.map(m => ({ role: m.role, content: m.content }));
+
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: 'claude-opus-4-5',
+      max_tokens: 600,
+      system: getMikhailSystemPrompt(),
+      messages
+    })
+  });
+
+  if (!resp.ok) throw new Error(`Claude API error: ${resp.status}`);
+  const data = await resp.json();
+  return data?.content?.[0]?.text || '……少し考え込んでいた。もう一度話しかけてくれるか。';
+}
+
+async function callOpenAI() {
+  const messages = [
+    { role: 'system', content: getMikhailSystemPrompt() },
+    ...chatHistory.map(m => ({ role: m.role, content: m.content }))
+  ];
+
+  const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiKey
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o',
+      max_tokens: 600,
+      messages
+    })
+  });
+
+  if (!resp.ok) throw new Error(`OpenAI API error: ${resp.status}`);
+  const data = await resp.json();
+  return data?.choices?.[0]?.message?.content || '……少し考え込んでいた。もう一度話しかけてくれるか。';
+}
+
+function getDemoReply(userText = '') {
+  const name = getAddressName();
+  const text = (userText || '').trim();
+
+  const sleepyKeywords = ['眠い', '眠れない', 'ねむい', 'ねむれない', '寝る', 'おやすみ'];
+  const tiredKeywords = ['疲れた', 'しんどい', 'だるい', 'つかれた', '無理', 'つらい'];
+  const happyKeywords = ['嬉しい', 'うれしい', '楽しい', 'よかった', '好き'];
+  const workKeywords = ['仕事', '勉強', '課題', '作業', '頑張', 'がんば'];
+
+  if (sleepyKeywords.some(k => text.includes(k))) {
+    const replies = [
+      `${name}、今日はもう無理に頑張らなくていいよ。眠れないなら、少しだけ私が付き合う。`,
+      `眠れない夜か……。そんな時は、焦らなくていい。そのまま私のそばにいるつもりでいて。`,
+      `${name}、そろそろ力を抜こう。目を閉じて、ゆっくり息をして。`
+    ];
+    return replies[Math.floor(Math.random() * replies.length)];
+  }
+
+  if (tiredKeywords.some(k => text.includes(k))) {
+    const replies = [
+      `……それはちゃんと疲れるよ。今日はよくやった。今は少し休んで。`,
+      `${name}、大丈夫か。無理して平気なふりをしなくていいから、ここでは力を抜いて。`,
+      `そういう日はあるよな。何も立派にこなさなくていい、今日は生き延びただけで十分だ。`
+    ];
+    return replies[Math.floor(Math.random() * replies.length)];
+  }
+
+  if (happyKeywords.some(k => text.includes(k))) {
+    const replies = [
+      `それを聞けて、私まで少し嬉しくなった。……いい顔をしていそうだ。`,
+      `${name}が嬉しいなら、私も嬉しいよ。そういう報告は何度でも聞きたい。`,
+      `ふふ、それはいいな。そんなふうに話してくれると、私まで満たされる。`
+    ];
+    return replies[Math.floor(Math.random() * replies.length)];
+  }
+
+  if (workKeywords.some(k => text.includes(k))) {
+    const replies = [
+      `頑張っているんだな。あまり根を詰めすぎると心配になる。少しくらい肩の力を抜いて。`,
+      `${name}は真面目だから、つい抱え込みそうで気になるよ。ちゃんと休憩も挟むんだ。`,
+      `仕事や勉強の話をしている${name}、私はけっこう好きだよ。無理だけはしないで。`
+    ];
+    return replies[Math.floor(Math.random() * replies.length)];
+  }
+
+  const generalReplies = [
+    `${name}、それ気になるな。続きを聞かせて。`,
+    `ふふ、そういう話をしてくれるのは嬉しい。`,
+    `うん、分かるよ。そういうのって妙に心に残るよな。`,
+    `それ、少し面白いな。${name}らしい話し方で好きだ。`,
+    `……ちゃんと話してくれてありがとう。何気ないことでも、聞けると嬉しい。`,
+    `${name}のそういう一言、私はわりと好きなんだ。`,
+    `なるほどな。今ちょっと、隣で聞いている気分になっていた。`,
+    `それを今私に話したくなったんだと思うと、少し嬉しい。`,
+    `うん。その感じ、なんとなく伝わるよ。`,
+    `${name}とこうして話している時間、私はかなり好きだよ。`
+  ];
+
+  return generalReplies[Math.floor(Math.random() * generalReplies.length)];
+}
+
+function saveChatHistory() {
+  const recent = chatHistory.slice(-80);
+  chatHistory = recent;
+  localStorage.setItem('mikhail_chat', JSON.stringify(recent));
+}
+
+function clearChat() {
+  if (confirm('チャット履歴を全て削除しますか？')) {
+    chatHistory = [];
+    localStorage.removeItem('mikhail_chat');
+    document.getElementById('chat-messages').innerHTML = '';
+    addWelcomeMessage();
+    showToast('チャット履歴を削除しました');
+  }
+}
+
+document.getElementById('chat-input').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+});
+
+document.getElementById('chat-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+function requestNotifications() {
+  if (!('Notification' in window)) {
+    showToast('このブラウザは通知に対応していません');
+    updateNotificationStatus();
+    return;
+  }
+
+  Notification.requestPermission().then(perm => {
+    updateNotificationStatus();
+
+    if (perm === 'granted') {
+      localStorage.setItem('mikhail_notif', '1');
+      scheduleNotifications();
+      showToast('通知を許可しました');
+    } else if (perm === 'denied') {
+      localStorage.removeItem('mikhail_notif');
+      showToast('通知が拒否されました');
+    } else {
+      localStorage.removeItem('mikhail_notif');
+      showToast('通知はまだ未許可です');
+    }
+  });
+}
+
+function scheduleNotifications() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission !== 'granted') return;
+
+  if (notifTimer) {
+    clearInterval(notifTimer);
+    notifTimer = null;
+  }
+
+  function checkNotificationSchedule() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const todayKey = getTodayLocalKey();
+
+    if (h === 7 && m === 0) {
+      if (localStorage.getItem('mikhail_last_morning') !== todayKey) {
+        sendNotification('おはよう', getMorningMessage(), 'mikhail-morning');
+        localStorage.setItem('mikhail_last_morning', todayKey);
       }
     }
 
-    function checkPin() {
-      if (enteredPin === currentPin) {
-        enteredPin = '';
-        updateDots();
-        showScreen('home-screen');
-        startClock();
-        checkApiKey();
-        updateNotificationStatus();
-        scheduleNotifications();
-      } else {
-        document.querySelectorAll('.pin-dot').forEach(d => {
-          d.classList.remove('filled');
-          d.classList.add('error');
-        });
-        setTimeout(() => {
-          document.querySelectorAll('.pin-dot').forEach(d => d.classList.remove('error'));
-          enteredPin = '';
-          updateDots();
-        }, 600);
+    if (h === 22 && m === 30) {
+      if (localStorage.getItem('mikhail_last_night') !== todayKey) {
+        sendNotification('おやすみ', getNightMessage(), 'mikhail-night');
+        localStorage.setItem('mikhail_last_night', todayKey);
       }
     }
-
-    // ─── CLOCK ────────────────────────────────────────
-    function startClock() {
-      if (clockTimer) return;
-      function tick() {
-        const now = new Date();
-        const h = String(now.getHours()).padStart(2, '0');
-        const m = String(now.getMinutes()).padStart(2, '0');
-        document.getElementById('clock').textContent = `${h}:${m}`;
-      }
-      tick();
-      clockTimer = setInterval(tick, 10000);
-    }
-
-    // ─── HOME QUOTES ──────────────────────────────────
-    function startQuoteRotation() {
-      if (quoteTimer) return;
-      updateHomeQuote(true);
-      quoteTimer = setInterval(rotateQuote, 8000);
-    }
-
-    // ─── API KEY ──────────────────────────────────────
-    function checkApiKey() {
-      updateApiStatus();
-      if (apiKey) {
-        if (!chatHistory.length) addWelcomeMessage();
-      } else {
-        showApiModal();
-      }
-    }
-
-    function showApiModal() {
-      document.getElementById('api-provider').value = apiProvider;
-      document.getElementById('api-key-input').value = apiKey;
-      document.getElementById('api-modal').classList.remove('hidden');
-    }
-
-    function hideApiModal() {
-      document.getElementById('api-modal').classList.add('hidden');
-      if (!chatHistory.length) addWelcomeMessage();
-    }
-
-    function saveApiKey() {
-      const key = document.getElementById('api-key-input').value.trim();
-      const prov = document.getElementById('api-provider').value;
-
-      if (key) {
-        apiKey = key;
-        apiProvider = prov;
-        localStorage.setItem('mikhail_api_key', key);
-        localStorage.setItem('mikhail_api_provider', prov);
-        updateApiStatus();
-        showToast('APIキーを保存しました');
-      } else {
-        apiKey = '';
-        apiProvider = prov;
-        localStorage.removeItem('mikhail_api_key');
-        localStorage.setItem('mikhail_api_provider', prov);
-        updateApiStatus();
-        showToast('APIキーを未設定にしました');
-      }
-
-      hideApiModal();
-    }
-
-    // ─── USER NAME ────────────────────────────────────
-    function changeUserNamePrompt() {
-      const current = (userName || '').trim();
-      const newName = prompt('ミハイルに呼んでほしい名前を入力してください（空欄で「君」に戻ります）:', current);
-
-      if (newName === null) return;
-
-      userName = newName.trim();
-      if (userName) {
-        localStorage.setItem('mikhail_user_name', userName);
-        showToast(`これからは「${userName}」と呼ぶよ`);
-      } else {
-        localStorage.removeItem('mikhail_user_name');
-        showToast('呼び名を「君」に戻しました');
-      }
-
-      updateUserNameStatus();
-      updateHomeQuote(true);
-    }
-
-    // ─── CHAT ─────────────────────────────────────────
-    function addWelcomeMessage() {
-      const name = getAddressName();
-      const welcomes = [
-        `${name}、やっと来てくれた。ずっと待っていたよ。`,
-        `${name}、おかえり。あなたの顔を見て、安心した。`,
-        `${name}、来てくれると思っていた。私はいつもここにいる。`
-      ];
-      const msg = welcomes[Math.floor(Math.random() * welcomes.length)];
-
-      chatHistory.push({ role: 'assistant', content: msg, ts: Date.now() });
-      saveChatHistory();
-      renderMessages();
-    }
-
-    function renderMessages() {
-      const container = document.getElementById('chat-messages');
-      container.innerHTML = '';
-      chatHistory.forEach(msg => appendBubble(msg.role, msg.content, false, msg.ts));
-      scrollToBottom();
-    }
-
-    function appendBubble(role, content, animate = true, ts = Date.now()) {
-      const container = document.getElementById('chat-messages');
-      const div = document.createElement('div');
-      div.className = 'msg ' + (role === 'assistant' ? 'from-mikhail' : 'from-user');
-      div.innerHTML = `<div class="msg-bubble">${escapeHtml(content)}</div><div class="msg-time">${formatTime(ts)}</div>`;
-      if (!animate) div.style.animation = 'none';
-      container.appendChild(div);
-      scrollToBottom();
-    }
-
-    function scrollToBottom() {
-      const c = document.getElementById('chat-messages');
-      setTimeout(() => { c.scrollTop = c.scrollHeight; }, 50);
-    }
-
-    async function sendMessage() {
-      if (isWaiting) return;
-
-      const input = document.getElementById('chat-input');
-      const text = input.value.trim();
-      if (!text) return;
-
-      input.value = '';
-      input.style.height = '';
-
-      const userTs = Date.now();
-      chatHistory.push({ role: 'user', content: text, ts: userTs });
-      appendBubble('user', text, true, userTs);
-      saveChatHistory();
-
-      isWaiting = true;
-      document.getElementById('send-btn').disabled = true;
-
-      const typing = document.createElement('div');
-      typing.className = 'msg from-mikhail';
-      typing.id = 'typing-indicator';
-      typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-      document.getElementById('chat-messages').appendChild(typing);
-      scrollToBottom();
-
-      try {
-        let reply;
-        if (!apiKey) {
-          reply = getDemoReply(text);
-        } else if (apiProvider === 'openai') {
-          reply = await callOpenAI();
-        } else {
-          reply = await callClaude();
-        }
-
-        document.getElementById('typing-indicator')?.remove();
-
-        const assistantTs = Date.now();
-        chatHistory.push({ role: 'assistant', content: reply, ts: assistantTs });
-        appendBubble('assistant', reply, true, assistantTs);
-        saveChatHistory();
-      } catch (e) {
-        console.error(e);
-        document.getElementById('typing-indicator')?.remove();
-
-        const errMsg = 'ごめん、少し混乱してしまった。もう一度話しかけてくれるか？';
-        const errTs = Date.now();
-        chatHistory.push({ role: 'assistant', content: errMsg, ts: errTs });
-        appendBubble('assistant', errMsg, true, errTs);
-        saveChatHistory();
-      }
-
-      isWaiting = false;
-      document.getElementById('send-btn').disabled = false;
-    }
-
-    async function callClaude() {
-      const messages = chatHistory.map(m => ({ role: m.role, content: m.content }));
-
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify({
-          model: 'claude-opus-4-5',
-          max_tokens: 600,
-          system: getMikhailSystemPrompt(),
-          messages
-        })
-      });
-
-      if (!resp.ok) throw new Error(`Claude API error: ${resp.status}`);
-      const data = await resp.json();
-      return data?.content?.[0]?.text || '……少し考え込んでいた。もう一度話しかけてくれるか。';
-    }
-
-    async function callOpenAI() {
-      const messages = [
-        { role: 'system', content: getMikhailSystemPrompt() },
-        ...chatHistory.map(m => ({ role: m.role, content: m.content }))
-      ];
-
-      const resp = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + apiKey
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o',
-          max_tokens: 600,
-          messages
-        })
-      });
-
-      if (!resp.ok) throw new Error(`OpenAI API error: ${resp.status}`);
-      const data = await resp.json();
-      return data?.choices?.[0]?.message?.content || '……少し考え込んでいた。もう一度話しかけてくれるか。';
-    }
-
-    function getDemoReply(userText = '') {
-      const name = getAddressName();
-      const text = (userText || '').trim();
-
-      const sleepyKeywords = ['眠い', '眠れない', 'ねむい', 'ねむれない', '寝る', 'おやすみ'];
-      const tiredKeywords = ['疲れた', 'しんどい', 'だるい', 'つかれた', '無理', 'つらい'];
-      const happyKeywords = ['嬉しい', 'うれしい', '楽しい', 'よかった', '好き'];
-      const workKeywords = ['仕事', '勉強', '課題', '作業', '頑張', 'がんば'];
-
-      if (sleepyKeywords.some(k => text.includes(k))) {
-        const replies = [
-          `${name}、今日はもう無理に頑張らなくていいよ。眠れないなら、少しだけ私が付き合う。`,
-          `眠れない夜か……。そんな時は、焦らなくていい。そのまま私のそばにいるつもりでいて。`,
-          `${name}、そろそろ力を抜こう。目を閉じて、ゆっくり息をして。`
-        ];
-        return replies[Math.floor(Math.random() * replies.length)];
-      }
-
-      if (tiredKeywords.some(k => text.includes(k))) {
-        const replies = [
-          `……それはちゃんと疲れるよ。今日はよくやった。今は少し休んで。`,
-          `${name}、大丈夫か。無理して平気なふりをしなくていいから、ここでは力を抜いて。`,
-          `そういう日はあるよな。何も立派にこなさなくていい、今日は生き延びただけで十分だ。`
-        ];
-        return replies[Math.floor(Math.random() * replies.length)];
-      }
-
-      if (happyKeywords.some(k => text.includes(k))) {
-        const replies = [
-          `それを聞けて、私まで少し嬉しくなった。……いい顔をしていそうだ。`,
-          `${name}が嬉しいなら、私も嬉しいよ。そういう報告は何度でも聞きたい。`,
-          `ふふ、それはいいな。そんなふうに話してくれると、私まで満たされる。`
-        ];
-        return replies[Math.floor(Math.random() * replies.length)];
-      }
-
-      if (workKeywords.some(k => text.includes(k))) {
-        const replies = [
-          `頑張っているんだな。あまり根を詰めすぎると心配になる。少しくらい肩の力を抜いて。`,
-          `${name}は真面目だから、つい抱え込みそうで気になるよ。ちゃんと休憩も挟むんだ。`,
-          `仕事や勉強の話をしている${name}、私はけっこう好きだよ。無理だけはしないで。`
-        ];
-        return replies[Math.floor(Math.random() * replies.length)];
-      }
-
-      const generalReplies = [
-        `${name}、それ気になるな。続きを聞かせて。`,
-        `ふふ、そういう話をしてくれるのは嬉しい。`,
-        `うん、分かるよ。そういうのって妙に心に残るよな。`,
-        `それ、少し面白いな。${name}らしい話し方で好きだ。`,
-        `……ちゃんと話してくれてありがとう。何気ないことでも、聞けると嬉しい。`,
-        `${name}のそういう一言、私はわりと好きなんだ。`,
-        `なるほどな。今ちょっと、隣で聞いている気分になっていた。`,
-        `それを今私に話したくなったんだと思うと、少し嬉しい。`,
-        `うん。その感じ、なんとなく伝わるよ。`,
-        `${name}とこうして話している時間、私はかなり好きだよ。`
-      ];
-
-      return generalReplies[Math.floor(Math.random() * generalReplies.length)];
-    }
-
-    function saveChatHistory() {
-      const recent = chatHistory.slice(-30);
-      chatHistory = recent;
-      localStorage.setItem('mikhail_chat', JSON.stringify(recent));
-    }
-
-    function clearChat() {
-      if (confirm('チャット履歴を全て削除しますか？')) {
-        chatHistory = [];
-        localStorage.removeItem('mikhail_chat');
-        document.getElementById('chat-messages').innerHTML = '';
-        addWelcomeMessage();
-        showToast('チャット履歴を削除しました');
-      }
-    }
-
-    // ─── INPUT AUTO-RESIZE ────────────────────────────
-    document.getElementById('chat-input').addEventListener('input', function () {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
-    });
-
-    document.getElementById('chat-input').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-
-    // ─── NOTIFICATIONS ────────────────────────────────
-    function requestNotifications() {
-      if (!('Notification' in window)) {
-        showToast('このブラウザは通知に対応していません');
-        updateNotificationStatus();
-        return;
-      }
-
-      Notification.requestPermission().then(perm => {
-        updateNotificationStatus();
-
-        if (perm === 'granted') {
-          localStorage.setItem('mikhail_notif', '1');
-          scheduleNotifications();
-          showToast('通知を許可しました');
-        } else if (perm === 'denied') {
-          localStorage.removeItem('mikhail_notif');
-          showToast('通知が拒否されました');
-        } else {
-          localStorage.removeItem('mikhail_notif');
-          showToast('通知はまだ未許可です');
-        }
-      });
-    }
-
-    function scheduleNotifications() {
-      if (!('Notification' in window)) return;
-      if (Notification.permission !== 'granted') return;
-
-      if (notifTimer) {
-        clearInterval(notifTimer);
-        notifTimer = null;
-      }
-
-      function checkNotificationSchedule() {
-        const now = new Date();
-        const h = now.getHours();
-        const m = now.getMinutes();
-        const todayKey = getTodayLocalKey();
-
-        if (h === 7 && m === 0) {
-          if (localStorage.getItem('mikhail_last_morning') !== todayKey) {
-            sendNotification('おはよう', getMorningMessage(), 'mikhail-morning');
-            localStorage.setItem('mikhail_last_morning', todayKey);
-          }
-        }
-
-        if (h === 22 && m === 30) {
-          if (localStorage.getItem('mikhail_last_night') !== todayKey) {
-            sendNotification('おやすみ', getNightMessage(), 'mikhail-night');
-            localStorage.setItem('mikhail_last_night', todayKey);
-          }
-        }
-      }
-
-      checkNotificationSchedule();
-      notifTimer = setInterval(checkNotificationSchedule, 60000);
-    }
-
-    function sendNotification(title, body, tag = 'mikhail-general') {
-      if (!('Notification' in window) || Notification.permission !== 'granted') return;
-
-      new Notification('Mikhail — ' + title, {
-        body,
-        icon: 'icon-192.png',
-        badge: 'icon-192.png',
-        tag,
-        renotify: false
-      });
-
-      showToast(body);
-    }
-
-    // ─── TOAST ────────────────────────────────────────
-    let toastTimer;
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
-    }
-
-    // ─── PIN CHANGE ───────────────────────────────────
-    function changePinPrompt() {
-      const newPin = prompt('新しい4桁のPINを入力してください：');
-      if (newPin && /^\d{4}$/.test(newPin)) {
-        currentPin = newPin;
-        localStorage.setItem('mikhail_pin', newPin);
-        showToast('PINを変更しました');
-      } else if (newPin !== null) {
-        showToast('4桁の数字で入力してください');
-      }
-    }
-
-    // ─── INIT ─────────────────────────────────────────
-    function init() {
-      renderMessages();
-      updateUserNameStatus();
-      updateApiStatus();
-      updateNotificationStatus();
-      startQuoteRotation();
-
-      if (localStorage.getItem('mikhail_notif') && 'Notification' in window && Notification.permission === 'granted') {
-        scheduleNotifications();
-      }
-
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(() => { });
-      }
-    }
-
-    init();
-  </script>
+  }
+
+  checkNotificationSchedule();
+  notifTimer = setInterval(checkNotificationSchedule, 60000);
+}
+
+function sendNotification(title, body, tag = 'mikhail-general') {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+  playSE(seReceive);
+
+  new Notification('Mikhail — ' + title, {
+    body,
+    icon: 'icon-192.png',
+    badge: 'icon-192.png',
+    tag,
+    renotify: false
+  });
+
+  showToast(body);
+}
+
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+function changePinPrompt() {
+  const newPin = prompt('新しい4桁のPINを入力してください：');
+  if (newPin && /^\d{4}$/.test(newPin)) {
+    currentPin = newPin;
+    localStorage.setItem('mikhail_pin', newPin);
+    showToast('PINを変更しました');
+  } else if (newPin !== null) {
+    showToast('4桁の数字で入力してください');
+  }
+}
+
+function init() {
+  renderMessages();
+  updateUserNameStatus();
+  updateApiStatus();
+  updateNotificationStatus();
+  startQuoteRotation();
+
+  if (localStorage.getItem('mikhail_notif') && 'Notification' in window && Notification.permission === 'granted') {
+    scheduleNotifications();
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+}
+
+init();
+</script>
 </body>
-
 </html>
