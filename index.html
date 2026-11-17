@@ -1341,6 +1341,10 @@
           <span class="action-icon">🔮</span>
           <span>占い</span>
         </button>
+        <button class="action-btn" onclick="goOtomeScreen()">
+          <span class="action-icon">🌹</span>
+          <span>乙女ゲーム</span>
+        </button>
       </div>
       <div class="home-quote" id="home-quote">「今日も、ゆうちゃんのことを考えていた」</div>
     </div>
@@ -1542,6 +1546,14 @@
     <div class="lightbox hidden" id="lightbox" onclick="closeLightbox()">
       <img id="lightbox-img" src="file:///C:/Users/jade-/Downloads/index_12.html" alt="">
     </div>
+  </div>
+
+  <div class="screen hidden" id="otome-screen" style="background:#08070a;justify-content:flex-start">
+    <div class="sub-header">
+      <div class="back-btn" onclick="leaveOtomeScreen()">‹</div>
+      <div class="sub-title">ミハイルは今日もキショい</div>
+    </div>
+    <iframe id="otome-frame" title="乙女ゲーム" allow="autoplay" style="flex:1;width:100%;min-height:0;border:0;display:block;background:#08070a"></iframe>
   </div>
 
   <div class="screen hidden" id="fortune-screen">
@@ -2581,6 +2593,19 @@ ${addressInstruction}
     function nkClockTick(){
       const now=new Date(), el=document.getElementById('neko-clock');
       if(el) el.textContent=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    }
+
+    // ── 乙女ゲーム（otome.html を画面内に表示） ──
+    function goOtomeScreen(){
+      showScreen('otome-screen');
+      const f = document.getElementById('otome-frame');
+      if (!f.getAttribute('src')) f.src = 'otome.html';
+      else if (f.contentWindow) f.contentWindow.postMessage('otome-resume', location.origin);
+    }
+    function leaveOtomeScreen(){
+      const f = document.getElementById('otome-frame');
+      if (f.contentWindow) f.contentWindow.postMessage('otome-pause', location.origin);
+      showScreen('home-screen');
     }
 
     function goNekoScreen(){

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mikhail-cache-v3';
+const CACHE_NAME = 'mikhail-cache-v4';
 const APP_SHELL = [
   './',
   './index.html',
@@ -33,15 +33,22 @@ self.addEventListener('fetch', event => {
   const request = event.request;
 
   // ページ遷移系は index.html を優先して返す
+  // アプリ本体(index.html)と、それ以外のページ(otome.html など)を分けて扱う
   if (request.mode === 'navigate') {
+    const path = new URL(request.url).pathname;
+    const isShell = path.endsWith('/') || path.endsWith('/index.html');
     event.respondWith((async () => {
       try {
         const networkResponse = await fetch(request);
-        const cache = await caches.open(CACHE_NAME);
-        cache.put('./index.html', networkResponse.clone());
+        if (networkResponse.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(isShell ? './index.html' : request, networkResponse.clone());
+        }
         return networkResponse;
       } catch (error) {
-        const cached = await caches.match('./index.html');
+        const cached = isShell
+          ? await caches.match('./index.html')
+          : (await caches.match(request));
         return cached || Response.error();
       }
     })());
